@@ -3080,11 +3080,11 @@ public class QuickServer implements Runnable, Service, Cloneable, Serializable {
    * @since 1.4.6
    */
   protected void loadBusinessLogic() throws Exception {
+    if ((clientCommandHandlerString == null && clientCommandHandler == null) && clientEventHandlerString == null) {
+      logger.severe("ClientCommandHandler AND ClientEventHandler was not set.");
+      throw new AppException("ClientCommandHandler AND ClientEventHandler was not set.");
+    }
     if (clientCommandHandler == null) {
-      if (clientCommandHandlerString == null && clientEventHandlerString == null) {
-        logger.severe("ClientCommandHandler AND ClientEventHandler was not set.");
-        throw new AppException("ClientCommandHandler AND ClientEventHandler was not set.");
-      }
       if (clientCommandHandlerString != null) {
         logger.finest("Loading ClientCommandHandler class..");
         Class clientCommandHandlerClass = getClass(clientCommandHandlerString, true);
